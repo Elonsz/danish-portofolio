@@ -7,6 +7,21 @@
 <a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
 </p>
 
+## Portfolio Dashboard
+
+Configure `DB_CONNECTION`, `DB_DATABASE`, and the related database settings in `.env` for a database that already exists. Then run:
+
+```bash
+php artisan migrate
+php artisan db:seed --class=CertificateSeeder
+php artisan storage:link
+php artisan portfolio:make-admin "Danish Pratama" admin@example.com
+```
+
+The admin command prompts for a password of at least 12 characters. Sign in at `/admin/login`; there is no public registration route. The dashboard supports adding, editing, and deleting certificates. Certificate images can be uploaded (up to 5 MB) or referenced by URL. Uploaded images are stored on Laravel's public disk.
+
+To run the project locally, use `composer run dev` and open the URL printed by Laravel.
+
 ## About Laravel
 
 Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
