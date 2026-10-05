@@ -13,12 +13,11 @@ Configure `DB_CONNECTION`, `DB_DATABASE`, and the related database settings in `
 
 ```bash
 php artisan migrate
-php artisan db:seed --class=CertificateSeeder
 php artisan storage:link
-php artisan portfolio:make-admin "Danish Pratama" admin@example.com
+php artisan portfolio:make-admin "Muhammad Danish El Shirazy" danish@example.com
 ```
 
-The admin command prompts for a password of at least 12 characters. Sign in at `/admin/login`; there is no public registration route. The dashboard supports adding, editing, and deleting certificates. Certificate images can be uploaded (up to 5 MB) or referenced by URL. Uploaded images are stored on Laravel's public disk.
+Replace `danish@example.com` with the email you want to use. The admin command prompts for a password of at least 12 characters. Sign in at `/admin/login`; there is no public registration route. The dashboard supports adding, editing, and deleting certificates, which appear in the public portfolio. Certificate images can be uploaded (up to 5 MB) or referenced by URL. Uploaded images are stored on Laravel's public disk.
 
 To run the project locally, use `composer run dev` and open the URL printed by Laravel.
 

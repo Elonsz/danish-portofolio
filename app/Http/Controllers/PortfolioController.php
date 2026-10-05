@@ -16,18 +16,18 @@ class PortfolioController extends Controller
     public function index()
     {
         $portfolio = config('portfolio');
-        $certificates = $portfolio['certificates'];
+        $portfolio['certificates'] = [];
 
         try {
             if (Schema::hasTable('certificates')) {
-                $certificates = Certificate::query()
+                $portfolio['certificates'] = Certificate::query()
                     ->orderByDesc('id')
                     ->get()
                     ->map(fn (Certificate $certificate) => [
                         'title' => $certificate->title,
                         'issuer' => $certificate->issuer,
                         'date' => $certificate->date,
-                        'id_credential' => $certificate->credential_id,
+                        'credential_id' => $certificate->credential_id,
                         'image' => $certificate->image_path
                             ? Storage::disk('public')->url($certificate->image_path)
                             : $certificate->image_url,
@@ -39,8 +39,6 @@ class PortfolioController extends Controller
         } catch (QueryException $exception) {
             report($exception);
         }
-
-        $portfolio['certificates'] = $certificates;
 
         return view('welcome', compact('portfolio'));
     }

@@ -139,7 +139,7 @@ class AdminCertificatesTest extends TestCase
         Storage::disk('public')->assertExists($certificate->image_path);
     }
 
-    public function test_public_portfolio_uses_sample_certificates_before_database_setup(): void
+    public function test_public_portfolio_shows_an_empty_state_before_database_setup(): void
     {
         Schema::shouldReceive('hasTable')
             ->once()
@@ -148,6 +148,7 @@ class AdminCertificatesTest extends TestCase
 
         $this->get(route('portfolio.home'))
             ->assertOk()
-            ->assertSee(config('portfolio.certificates.0.title'));
+            ->assertSee('Belum ada sertifikat yang ditambahkan.')
+            ->assertSee(route('admin.login'));
     }
 }
