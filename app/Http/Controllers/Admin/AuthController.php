@@ -12,7 +12,7 @@ class AuthController extends Controller
 {
     public function create(Request $request): View|RedirectResponse
     {
-        if ($request->user()?->is_admin) {
+        if ($request->session()->get('portfolio_admin_authenticated') || $request->user()?->is_admin) {
             return redirect()->route('admin.certificates.index');
         }
 
@@ -26,20 +26,43 @@ class AuthController extends Controller
             'password' => ['required', 'string'],
         ]);
 
-        if (! Auth::attempt([...$credentials, 'is_admin' => true])) {
-            return back()->withErrors([
-                'email' => 'Email atau password tidak sesuai.',
-            ])->onlyInput('email');
+        $adminEmail = config('portfolio.admin.email', 'danish@admin.me');
+        $adminPassword = config('portfolio.admin.password', 'danishsecret2026!');
+
+        // 1. Standalone authentication without database (credentials configured in .env / config)
+        $matchesConfig = hash_equals(strtolower((string) $adminEmail), strtolower((string) $credentials['email']))
+            && hash_equals((string) $adminPassword, (string) $credentials['password']);
+
+        // 2. Database fallback if database service is running
+        $matchesDb = false;
+        try {
+            $matchesDb = Auth::attempt([...$credentials, 'is_admin' => true]);
+        } catch (\Throwable $e) {
+            // Database may be offline, ignore safely
         }
 
-        $request->session()->regenerate();
+        if ($matchesConfig || $matchesDb) {
+            $request->session()->regenerate();
+            $request->session()->put('portfolio_admin_authenticated', true);
+            $request->session()->put('portfolio_admin_email', $credentials['email']);
 
-        return redirect()->intended(route('admin.certificates.index'));
+            return redirect()->intended(route('admin.certificates.index'));
+        }
+
+        return back()->withErrors([
+            'email' => 'Email atau password tidak sesuai.',
+        ])->onlyInput('email');
     }
 
     public function destroy(Request $request): RedirectResponse
     {
-        Auth::logout();
+        $request->session()->forget(['portfolio_admin_authenticated', 'portfolio_admin_email']);
+        try {
+            Auth::logout();
+        } catch (\Throwable $e) {
+            // Ignore
+        }
+
         $request->session()->invalidate();
         $request->session()->regenerateToken();
 

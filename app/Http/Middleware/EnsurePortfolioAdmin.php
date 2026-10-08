@@ -10,11 +10,12 @@ class EnsurePortfolioAdmin
 {
     public function handle(Request $request, Closure $next): Response
     {
-        if (! $request->user()) {
+        $isSessionAuthed = $request->session()->get('portfolio_admin_authenticated') === true;
+        $isDbAuthed = $request->user() && $request->user()->is_admin;
+
+        if (! $isSessionAuthed && ! $isDbAuthed) {
             return redirect()->route('admin.login');
         }
-
-        abort_unless($request->user()->is_admin, 403);
 
         return $next($request);
     }

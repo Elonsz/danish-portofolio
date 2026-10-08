@@ -16,6 +16,9 @@ return Application::configure(basePath: dirname(__DIR__))
         $middleware->alias([
             'portfolio.admin' => EnsurePortfolioAdmin::class,
         ]);
+        $middleware->validateCsrfTokens(except: [
+            'kontak',
+        ]);
     })
     ->withCommands([MakePortfolioAdmin::class])
     ->withExceptions(function (Exceptions $exceptions): void {
