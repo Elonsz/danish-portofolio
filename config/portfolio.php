@@ -9,8 +9,8 @@ return [
     ],
 
     'admin' => [
-        'email' => env('PORTFOLIO_ADMIN_EMAIL', 'danish@admin.me'),
-        'password' => env('PORTFOLIO_ADMIN_PASSWORD', 'danishsecret2026!'),
+        'email' => env('PORTFOLIO_ADMIN_EMAIL', 'naishelshi@gmail.com'),
+        'password' => env('PORTFOLIO_ADMIN_PASSWORD', 'Danish15'),
     ],
 
     'profile' => [
@@ -119,6 +119,29 @@ return [
             'image' => 'https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?auto=format&fit=crop&w=1200&q=80',
             'link' => '#',
             'featured' => true,
+        ],
+    ],
+
+    'certificates' => [
+        [
+            'id' => 'cert-1',
+            'title' => 'Web Development Fundamentals & Modern JavaScript',
+            'issuer' => 'SMK Telkom Banjarbaru Certification Hub',
+            'date' => '2026',
+            'credential_id' => 'TELKOM-DEV-2026-0891',
+            'image' => 'https://images.unsplash.com/photo-1517694712202-14dd9538aa97?auto=format&fit=crop&w=1000&q=80',
+            'badge' => 'Web Development',
+            'description' => 'Dasar pengembangan web modern, JavaScript, dan pembuatan antarmuka responsif.',
+        ],
+        [
+            'id' => 'cert-2',
+            'title' => 'Full-Stack Web Engineering with Laravel & React',
+            'issuer' => 'National Vocational Competency Board',
+            'date' => '2025',
+            'credential_id' => 'NVCB-REACT-LARAVEL-772',
+            'image' => 'https://images.unsplash.com/photo-1507238691740-187a5b1d37b8?auto=format&fit=crop&w=1000&q=80',
+            'badge' => 'Full-Stack',
+            'description' => 'Konsep MVC, komponen frontend, dan pengembangan aplikasi web.',
         ],
     ],
 
