@@ -9,8 +9,8 @@ return [
     ],
 
     'admin' => [
-        'email' => env('PORTFOLIO_ADMIN_EMAIL', 'danish@admin.me'),
-        'password' => env('PORTFOLIO_ADMIN_PASSWORD', 'danishsecret2026!'),
+        'email' => env('PORTFOLIO_ADMIN_EMAIL', 'naishelshi@gmail.com'),
+        'password' => env('PORTFOLIO_ADMIN_PASSWORD', ''),
     ],
 
     'profile' => [
